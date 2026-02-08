@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Valentine Clues</title>
+  <title>SUP-site</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -14,8 +14,30 @@
     <section id="grid" class="grid" aria-label="Number grid"></section>
 
     <button id="finish" class="btn" disabled>Open your reward 🎥</button>
+
+    <!-- NEW: tracker -->
+    <section class="tracker">
+      <div class="tracker-head">
+        <span class="tracker-title">Your collected code (in order)</span>
+        <button id="reset" class="reset" type="button">Reset</button>
+      </div>
+
+      <div class="tracker-row">
+        <div class="tracker-box">
+          <div class="tracker-label">ASCII</div>
+          <div id="asciiTrack" class="tracker-mono"></div>
+        </div>
+        <div class="tracker-box">
+          <div class="tracker-label">Decoded</div>
+          <div id="textTrack" class="tracker-text"></div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <script src="game.js"></script>
 </body>
 </html>
+
+
