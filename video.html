@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Your Reward</title>
+  <title>SUP-site</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,18 +11,26 @@
     <h1 class="title">For you 💗</h1>
 
     <div class="video-wrap">
-      <video id="vid" class="vid" controls playsinline preload="metadata">
+      <video
+        id="vid"
+        class="vid"
+        preload="auto"
+        autoplay
+        muted
+        controls
+        playsinline
+      >
         <source src="assets/edit.mp4" type="video/mp4" />
         Your browser can’t play this video.
       </video>
 
-      <div id="overlay" class="overlay hidden" aria-live="polite">
-        <div class="dump" id="dump"></div>
-        <div class="reveal" id="reveal"></div>
+      <!-- Optional: tiny hint if autoplay fails -->
+      <div id="tapHint" class="overlay hidden">
+        <div class="reveal">Tap play 💗</div>
       </div>
     </div>
 
-    <p class="sub">Tip: tap play, then watch till the end.</p>
+    <p class="sub">If it doesn’t start instantly, tap play once.</p>
   </main>
 
   <script src="video.js"></script>
