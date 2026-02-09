@@ -1,0 +1,223 @@
+/* Page-specific polish only. Keeps your existing theme untouched. */
+
+.stage{
+  display:flex;
+  justify-content:center;
+  padding-top: 10px;
+}
+
+.card{
+  width: min(980px, 100%);
+  background: rgba(19,19,28,.55);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 22px;
+  padding: 18px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 24px 90px rgba(0,0,0,.45);
+}
+
+.big{ font-size: 30px; }
+
+.decrypt-grid{
+  margin-top: 14px;
+  display:grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 900px){
+  .decrypt-grid{ grid-template-columns: 1fr; }
+}
+
+.panel{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.06);
+  background: rgba(255,255,255,.03);
+  padding: 14px;
+  overflow:hidden;
+}
+
+.panel-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.panel-title{
+  color: rgba(246,242,255,.78);
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+
+.pill{
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.05);
+  color: rgba(246,242,255,.9);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.ascii-line{
+  min-height: 54px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(246,242,255,.92);
+  word-break: break-word;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.06);
+  background: rgba(0,0,0,.18);
+}
+
+.message-line{
+  min-height: 54px;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: .4px;
+  color: rgba(246,242,255,.98);
+  padding: 8px 2px;
+}
+
+.divider{
+  height: 1px;
+  background: rgba(255,255,255,.06);
+  margin: 12px 0;
+}
+
+.help-card{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.06);
+  background: rgba(255,255,255,.03);
+  padding: 14px;
+}
+
+.help-title{
+  font-weight: 900;
+  color: rgba(246,242,255,.92);
+  margin-bottom: 8px;
+}
+
+.help-text{
+  color: rgba(200,185,230,.95);
+  line-height: 1.5;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.help-text code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  background: rgba(0,0,0,.18);
+  padding: 2px 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.06);
+}
+
+.mini-table{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.mini-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 8px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.06);
+  background: rgba(0,0,0,.14);
+  color: rgba(246,242,255,.9);
+}
+
+.mini-row code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  color: rgba(246,242,255,.85);
+}
+
+.mini-row span{
+  font-weight: 900;
+}
+
+.hidden{ display:none; }
+
+.cta{
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  position: relative;
+}
+
+.question{
+  font-size: 28px;
+  font-weight: 950;
+  letter-spacing: .2px;
+  margin-bottom: 10px;
+}
+
+.buttons{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn.yes{
+  background: var(--accent);
+  color: #1b0b14;
+}
+
+.btn.no{
+  background: rgba(255,255,255,.08);
+  color: rgba(246,242,255,.95);
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.result{
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: 800;
+  color: rgba(246,242,255,.95);
+  min-height: 24px;
+}
+
+/* Pop-in animation for numbers */
+.token{
+  display:inline-block;
+  margin-right: 8px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: tokenIn .35s ease forwards;
+}
+
+@keyframes tokenIn{
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+/* Confetti */
+.confetti-layer{
+  pointer-events:none;
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+
+.confetti{
+  position:absolute;
+  top:-20px;
+  width:10px;
+  height:16px;
+  border-radius: 4px;
+  opacity: .95;
+  animation: confettiFall 1.6s linear forwards;
+}
+
+@keyframes confettiFall{
+  to{
+    transform: translateY(520px) rotate(360deg);
+    opacity: 0;
+  }
+}
