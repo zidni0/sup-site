@@ -4,12 +4,77 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SUP-site</title>
+
+  <!-- Keep your global vibe -->
   <link rel="stylesheet" href="style.css" />
+  <!-- Page-specific animations/styles -->
+  <link rel="stylesheet" href="next.css" />
 </head>
 <body>
   <main class="wrap">
-    <h1 class="title">💗</h1>
-    <p class="sub">One more thing…</p>
+    <section class="stage">
+      <div class="card">
+        <h1 class="title big">Decrypting your clues…</h1>
+        <p class="sub">You collected numbers. They were letters in disguise.</p>
+
+        <div class="decrypt-grid">
+          <div class="panel">
+            <div class="panel-head">
+              <span class="panel-title">ASCII codes (appearing one by one)</span>
+              <span class="pill" id="progressPill">0/0</span>
+            </div>
+
+            <div id="asciiLine" class="ascii-line"></div>
+
+            <div class="divider"></div>
+
+            <div class="panel-head">
+              <span class="panel-title">Message</span>
+            </div>
+            <div id="messageLine" class="message-line"></div>
+          </div>
+
+          <aside class="help">
+            <div class="help-card">
+              <div class="help-title">What is ASCII?</div>
+              <div class="help-text">
+                ASCII is a simple code: <b>a number = a character</b>.<br>
+                Example: <code>119 → “w”</code>, <code>32 → space</code>.
+              </div>
+
+              <div class="mini-table">
+                <div class="mini-row"><code>97</code><span>a</span></div>
+                <div class="mini-row"><code>98</code><span>b</span></div>
+                <div class="mini-row"><code>101</code><span>e</span></div>
+                <div class="mini-row"><code>105</code><span>i</span></div>
+                <div class="mini-row"><code>108</code><span>l</span></div>
+                <div class="mini-row"><code>109</code><span>m</span></div>
+                <div class="mini-row"><code>110</code><span>n</span></div>
+                <div class="mini-row"><code>111</code><span>o</span></div>
+                <div class="mini-row"><code>116</code><span>t</span></div>
+                <div class="mini-row"><code>118</code><span>v</span></div>
+                <div class="mini-row"><code>119</code><span>w</span></div>
+                <div class="mini-row"><code>121</code><span>y</span></div>
+                <div class="mini-row"><code>32</code><span>space</span></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="cta hidden" id="cta">
+          <div class="question" id="questionText">Will you be my Valentine?</div>
+          <div class="buttons">
+            <button class="btn yes" id="yesBtn" type="button">Yes 💗</button>
+            <button class="btn no" id="noBtn" type="button">No 🙃</button>
+          </div>
+          <div class="result" id="result"></div>
+          <div class="confetti-layer" id="confetti"></div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <script src="next.js"></script>
 </body>
 </html>
+
