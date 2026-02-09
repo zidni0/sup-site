@@ -19,18 +19,19 @@ const COLS = 12;
 const CELL_COUNT = ROWS * COLS;
 
 // ---- "19" SHAPE PLACEMENT ----
-// IMPORTANT: MUST have exactly 24 "1"s (because TARGETS.length = 24).
-// This mask draws a clear "19" using 24 target spots.
+// This mask is shifted ONE row down (top row empty) for centering.
+// Also, two target spots were moved to fix the "9" shape where you circled.
+// IMPORTANT: Exactly 24 "1"s (matches TARGETS length 24).
 const MASK = [
-  "001000011110",
-  "001000010010",
-  "001000010010",
-  "001000011110",
-  "001000000010",
-  "001000000010",
-  "001000000110",
-  "001000000000",
   "000000000000",
+  "001000001110",
+  "001000010010",
+  "001000010010",
+  "001000001110",
+  "001000000010",
+  "001000000010",
+  "001000011110",
+  "001000000000",
   "000000000000",
 ];
 
@@ -41,7 +42,6 @@ for (let r = 0; r < ROWS; r++) {
   }
 }
 
-// Keep this. It prevents silent bugs.
 if (targetIndices.length !== TARGETS.length) {
   throw new Error(`MASK has ${targetIndices.length} targets, but needs ${TARGETS.length}. Fix the MASK.`);
 }
@@ -112,9 +112,11 @@ function render() {
       // Correct = ❤, Wrong = 💔
       btn.addEventListener("click", () => {
         if (cell.pos !== null) {
-          btn.classList.add("pop"); // harmless if you don't have .pop in CSS
+          // correct target
+          btn.classList.add("pop"); // harmless if you don't have .pop CSS
           setTimeout(() => pick(cell), 110);
         } else {
+          // wrong click
           wrongFeedback(btn, String(cell.value));
         }
       });
@@ -127,7 +129,8 @@ function render() {
 }
 
 function pick(cell) {
-  if (cell.pos === null) return; // only targets
+  // Only targets can be picked
+  if (cell.pos === null) return;
 
   cell.picked = true;
 
