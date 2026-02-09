@@ -19,26 +19,20 @@ const COLS = 12;
 const CELL_COUNT = ROWS * COLS;
 
 // ---- "19" SHAPE PLACEMENT ----
-// We'll define a mask where "1" means "place a target here".
 // Need exactly 24 target cells (because TARGETS.length = 24).
-// This 10x12 mask draws a stylized "19" using 24 spots.
-// If you want the "19" thicker/thinner later, change the 1s,
-// but keep the total count = 24.
-
 const MASK = [
-  "000100000000",
-  "001100000000",
-  "000100000110",
-  "000100001010",
-  "000100001010",
-  "000100001110",
-  "000100000010",
-  "000100000010",
-  "001110001100",
-  "000000000000",
+  "000110000000", // 1
+  "000110000000",
+  "000110000000",
+  "000110001110", // 9 top
+  "000110001010",
+  "000110001010",
+  "000110001110",
+  "000110000010",
+  "000110000010",
+  "000000001100", // little base
 ];
 
-// Convert mask -> list of target indices
 const targetIndices = [];
 for (let r = 0; r < ROWS; r++) {
   for (let c = 0; c < COLS; c++) {
@@ -47,24 +41,15 @@ for (let r = 0; r < ROWS; r++) {
 }
 
 if (targetIndices.length !== TARGETS.length) {
-  // Safety: if mask count doesn't match targets, fallback to random.
-  // (You can delete this once you're happy.)
-  console.warn("MASK count =", targetIndices.length, "but TARGETS length =", TARGETS.length);
+  throw new Error(`MASK has ${targetIndices.length} targets, but needs ${TARGETS.length}. Fix the MASK.`);
 }
+
+// Single targetSet (NO duplicates)
+const targetSet = new Set(targetIndices);
 
 // Build cells
 const cells = [];
 let t = 0;
-
-const useMask = (targetIndices.length === TARGETS.length);
-const targetSet = new Set(useMask ? targetIndices : []);
-
-if (!useMask) {
-  // fallback random if mask wrong
-  while (targetSet.size < TARGETS.length) {
-    targetSet.add(Math.floor(Math.random() * CELL_COUNT));
-  }
-}
 
 for (let i = 0; i < CELL_COUNT; i++) {
   let value, pos;
@@ -81,24 +66,32 @@ for (let i = 0; i < CELL_COUNT; i++) {
   cells.push({ value, pos, picked: false });
 }
 
-function asciiToText(arr) {
-  return arr.map(n => String.fromCharCode(n)).join("");
-}
-
 function updateTracker() {
   // show collected ascii in correct order (with blanks)
   const asciiOrdered = collected.map(x => (x ? x.ascii : "__"));
   asciiTrackEl.textContent = asciiOrdered.join(" ");
 
-  // decode only what is collected (contiguous fill isn't required)
-  // We'll decode with blanks as spaces, so she sees progress.
-  const decoded = collected.map(x => (x ? String.fromCharCode(x.ascii) : "•")).join("");
-  textTrackEl.textContent = decoded;
+  // DO NOT reveal decoded message on this page
+  if (textTrackEl) textTrackEl.textContent = "";
 
   // counts + button
   const got = collected.filter(Boolean).length;
   countEl.textContent = String(got);
   finishBtn.disabled = got !== TARGETS.length;
+}
+
+function wrongFeedback(btn, originalText) {
+  btn.disabled = true;
+  btn.textContent = "💔";
+  btn.style.borderColor = "rgba(255,119,183,.55)";
+  btn.style.background = "rgba(255,119,183,.10)";
+
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.textContent = originalText;
+    btn.style.borderColor = "";
+    btn.style.background = "";
+  }, 550);
 }
 
 function render() {
@@ -115,7 +108,18 @@ function render() {
       btn.textContent = "❤";
     } else {
       btn.classList.add("slide-in");
-      btn.addEventListener("click", () => pick(cell));
+
+      // ✅ FIXED CLICK HANDLER (correct = ❤, wrong = 💔)
+      btn.addEventListener("click", () => {
+        if (cell.pos !== null) {
+          // correct target
+          btn.classList.add("pop");        // harmless if pop css doesn't exist
+          setTimeout(() => pick(cell), 110);
+        } else {
+          // wrong click
+          wrongFeedback(btn, String(cell.value));
+        }
+      });
     }
 
     gridEl.appendChild(btn);
@@ -125,9 +129,12 @@ function render() {
 }
 
 function pick(cell) {
+  // Only targets can be picked
+  if (cell.pos === null) return;
+
   cell.picked = true;
 
-  if (cell.pos !== null && collected[cell.pos] === null) {
+  if (collected[cell.pos] === null) {
     collected[cell.pos] = { pos: cell.pos, ascii: cell.value };
     localStorage.setItem("val_collected", JSON.stringify(collected));
   }
@@ -142,10 +149,13 @@ finishBtn.addEventListener("click", () => {
 
 resetBtn.addEventListener("click", () => {
   localStorage.removeItem("val_collected");
+
   // reset collected
   for (let i = 0; i < collected.length; i++) collected[i] = null;
+
   // reset picked states
   for (const cell of cells) cell.picked = false;
+
   render();
 });
 
