@@ -82,24 +82,57 @@ setTimeout(step, 400);
 
 // Confetti generator (simple + reliable)
 function popConfetti() {
-  const count = 40;
-  const width = confettiLayer.clientWidth || 900;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  // More confetti and spread across full screen
+  const count = Math.min(160, Math.floor(width / 4)); // scales with screen size
 
   for (let k = 0; k < count; k++) {
     const p = document.createElement("div");
     p.className = "confetti";
+
+    // random position across the top
     p.style.left = Math.floor(Math.random() * width) + "px";
-    p.style.transform = `translateY(0) rotate(${Math.random() * 180}deg)`;
-    // Use your theme: pink/purple/white-ish
-    const choices = ["rgba(255,119,183,.95)","rgba(201,147,255,.95)","rgba(246,242,255,.9)"];
+
+    // random size variety
+    const size = 10 + Math.random() * 12; // 10..22
+    p.style.width = size + "px";
+    p.style.height = (size * 1.2) + "px";
+
+    // colors (theme-matching)
+    const choices = [
+      "rgba(255,119,183,.98)",
+      "rgba(201,147,255,.98)",
+      "rgba(246,242,255,.95)",
+      "rgba(255,190,220,.95)"
+    ];
     p.style.background = choices[Math.floor(Math.random() * choices.length)];
-    p.style.animationDelay = (Math.random() * 0.2) + "s";
+
+    // random fall duration + delay
+    const dur = 2.2 + Math.random() * 1.4; // 2.2..3.6s
+    const delay = Math.random() * 0.2;     // 0..0.2s
+    p.style.animationDuration = dur + "s";
+    p.style.animationDelay = delay + "s";
+
+    // random drift + spin
+    const drift = (Math.random() * 2 - 1) * (width * 0.25); // left/right drift
+    const rot = 360 + Math.random() * 720;
+
+    // start transform
+    p.style.transform = `translateY(0) translateX(0) rotate(${Math.random() * 180}deg)`;
+
+    // hack: bake drift into animation using CSS variable-ish approach
+    // We'll just set a random translateX using a CSS trick: put it in translate at end via inline keyframes? too heavy.
+    // Instead: use a simple interval-less trick by setting a random margin-left at creation.
+    p.style.marginLeft = (drift / 30) + "px";
+
     confettiLayer.appendChild(p);
 
-    // Clean up
-    setTimeout(() => p.remove(), 1800);
+    setTimeout(() => p.remove(), (dur + delay + 0.2) * 1000);
   }
 }
+
 
 function celebrate() {
   result.textContent = "Hooray 🎉 You picked YES 💗 refrsh if u think u made a mistake";
