@@ -198,29 +198,34 @@
 }
 
 /* Confetti */
+/* Confetti (FULL PAGE) */
 .confetti-layer{
   pointer-events:none;
-  position:absolute;
-  inset:0;
-  overflow:hidden;
+  position: fixed;   /* full page */
+  inset: 0;
+  overflow: hidden;
+  z-index: 9999;
 }
 
 .confetti{
   position:absolute;
-  top:-20px;
-  width:10px;
-  height:16px;
-  border-radius: 4px;
-  opacity: .95;
-  animation: confettiFall 1.6s linear forwards;
+  top:-24px;
+  width: 14px;
+  height: 18px;
+  border-radius: 5px;
+  opacity: .98;
+  animation: confettiFall 2.6s linear forwards;
+  will-change: transform, opacity;
 }
 
 @keyframes confettiFall{
   to{
-    transform: translateY(520px) rotate(360deg);
+    transform: translateY(120vh) rotate(720deg);
     opacity: 0;
   }
 }
+
+
 /* Proposal photo */
 .photo-wrap{
   margin: 12px 0 6px;
