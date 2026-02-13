@@ -27,16 +27,15 @@ async function tryFullscreen(videoEl) {
 
 async function startPlayback() {
   try {
-    // Autoplay attempt (muted)
+    vid.muted = false; // explicitly unmute
     await vid.play();
-
-    // Try fullscreen after playback starts (some browsers only allow it then)
-    tryFullscreen(vid);
   } catch (err) {
-    // Autoplay blocked: show hint (user must tap play once)
-    if (tapHint) tapHint.classList.remove("hidden");
+    // If autoplay with sound fails, fallback:
+    vid.muted = true;
+    await vid.play();
   }
 }
+
 
 // Kick off immediately
 startPlayback();
@@ -51,3 +50,4 @@ vid.addEventListener("play", () => {
 vid.addEventListener("ended", () => {
   window.location.href = "next.html";
 });
+
