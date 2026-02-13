@@ -27,14 +27,31 @@ async function tryFullscreen(videoEl) {
 
 async function startPlayback() {
   try {
-    vid.muted = false; // explicitly unmute
+    vid.muted = false;
     await vid.play();
+    tryFullscreen(vid);
   } catch (err) {
-    // If autoplay with sound fails, fallback:
+    // If autoplay with sound fails
     vid.muted = true;
     await vid.play();
+    tryFullscreen(vid);
   }
 }
+async function tryFullscreen(video) {
+  try {
+    if (video.requestFullscreen) {
+      await video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen) {
+      video.webkitRequestFullscreen();
+    } else if (video.webkitEnterFullscreen) {
+      video.webkitEnterFullscreen(); // iOS
+    }
+  } catch (e) {
+    // Fullscreen blocked — ignore
+  }
+}
+
+
 
 
 // Kick off immediately
@@ -50,4 +67,5 @@ vid.addEventListener("play", () => {
 vid.addEventListener("ended", () => {
   window.location.href = "next.html";
 });
+
 
