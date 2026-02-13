@@ -102,7 +102,7 @@ function popConfetti() {
 }
 
 function celebrate() {
-  result.textContent = "Hooray 🎉 You picked YES 💗";
+  result.textContent = "Hooray 🎉 You picked YES 💗 refrsh if u think u made a mistake";
   popConfetti();
   yesBtn.disabled = true;
   noBtn.disabled = true;
