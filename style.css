@@ -203,3 +203,36 @@ body{
 .tracker-text{ display:none; }
 /* If your decoded area is the SECOND .tracker-box, hide it too */
 .tracker-row .tracker-box:nth-child(2){ display:none; }
+/* ---- MOBILE GRID FIX ---- */
+@media (max-width: 600px){
+
+  .wrap{
+    padding: 20px 12px 32px;
+  }
+
+  .grid{
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .cell{
+    height: 38px;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+
+  .title{
+    font-size: 22px;
+  }
+
+  .sub{
+    font-size: 14px;
+  }
+
+  .btn{
+    height: 44px;
+    font-size: 14px;
+  }
+
+}
+
